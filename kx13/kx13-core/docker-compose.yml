@@ -2,9 +2,10 @@ version: '3.4'
 
 services:
   admin:
+    # Uncomment to use the dockerfile to build a custom image
     #build: 
     #    context: .\ems-web-only
-    image: kentico/xperience-13-core:admin-13.0.12-preview
+    image: kentico/xperience-13-core:admin-13.0.12
     ports:
       - 60051:80
     links:
@@ -13,24 +14,26 @@ services:
       - sql    
 
   sql:
+    # Uncomment to use the dockerfile to build a custom image
     #build: 
     #    context: .\ems-db
     #environment:
     #  - sa_password=Pass@word1
     #  - ACCEPT_EULA=Y
     #image: microsoft/mssql-server-windows-express
-    image: kentico/xperience-13-core:sql-13.0.12-preview
+    image: kentico/xperience-13-core:sql-13.0.12
     ports:
       - 1435:1433
   
   web:
-    image: kentico/xperience-13-core:web-13.0.12-preview
+    image: kentico/xperience-13-core:web-13.0.12
     ports:
       - 8080:80
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       - DOTNET_USE_POLLING_FILE_WATCHER=1
+    # Enables development changes to occur without need for pushing changes directly in to container
     # volumes: 
     #   - ./web/dancinggoatcore_3:c:/kx/dancinggoatcore
     links:
